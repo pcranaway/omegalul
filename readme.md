@@ -8,12 +8,8 @@ This library is mostly based on [nucular's omegle reverse engineering gist](http
 ```python3
 import omegalul
 
-# get status and choose a random server
-status = omegalul.fetch_status()
-server = omegalul.get_random_server(status['servers'])
-
 # start a chat
-chat = omegalul.start_chat(server)
+chat = omegalul.start_chat()
 print(chat)
 
 while True:
