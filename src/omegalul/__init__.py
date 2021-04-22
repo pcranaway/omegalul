@@ -4,6 +4,9 @@ import json
 import string
 import enum
 
+servers = []
+server = ''
+
 class Event(enum.Enum):
     """
     represents an event
@@ -89,3 +92,7 @@ def start_chat(server):
     client_id = json.loads(response.text)['clientID']
 
     return Chat(server, client_id)
+
+# hopefully this is called when the module is imported
+servers = fetch_status()['servers']
+server = get_random_server(servers)
