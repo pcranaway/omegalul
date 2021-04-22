@@ -1,3 +1,4 @@
 dist/
 build/
 src/omegalul.egg-info
+src/omegalul/__pycache__
