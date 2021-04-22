@@ -5,7 +5,7 @@ with open('readme.md') as file:
 
 setuptools.setup(
     name='omegalul',
-    version='1.0.0',
+    version='1.0.1',
     author='pcranaway',
     author_email='pcranaway@tuta.io',
     description='A Python library for building omegle clients',
