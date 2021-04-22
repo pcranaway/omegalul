@@ -20,12 +20,11 @@ class Chat:
     represents a chat
     """
 
-    def __init__(self, server, client_id):
+    def __init__(self, client_id):
         """
         creates a chat with a client id
         """
 
-        self.server = server
         self.client_id = client_id
         self.messages = []
 
@@ -35,7 +34,7 @@ class Chat:
         returns only when a new event is received
         """
 
-        event = json.loads(requests.post(self.server + '/events', data={'id': self.client_id}).text)[0]
+        event = json.loads(requests.post(server + '/events', data={'id': self.client_id}).text)[0]
 
         if event[0] == 'gotMessage':
             return (Event.GOTMESSAGE, event[1])
@@ -53,7 +52,7 @@ class Chat:
         sends a message to a chat
         """
 
-        requests.post(self.server + '/send', data={'msg': message, 'id': self.client_id})
+        requests.post(server + '/send', data={'msg': message, 'id': self.client_id})
 
 def fetch_status():
     """
@@ -79,7 +78,7 @@ def generate_randid():
 
     return ''.join(random.choice(chars) for i in range(8))
 
-def start_chat(server):
+def start_chat():
     """
     starts a chat using the specified server
     """
@@ -91,7 +90,7 @@ def start_chat(server):
 
     client_id = json.loads(response.text)['clientID']
 
-    return Chat(server, client_id)
+    return Chat(client_id)
 
 # hopefully this is called when the module is imported
 servers = fetch_status()['servers']
