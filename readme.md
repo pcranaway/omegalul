@@ -6,6 +6,8 @@ This library is mostly based on [nucular's omegle reverse engineering gist](http
 
 # Usage
 ```python3
+import omegalul
+
 # get status and choose a random server
 status = omegalul.fetch_status()
 server = omegalul.get_random_server(status['servers'])
@@ -19,7 +21,7 @@ while True:
 
     print(event)
 
-    if event[0] == Events.GOTMESSAGE:
+    if event[0] == omegalul.Event.GOTMESSAGE:
       chat.send_message(event[1])
       print('sent message back')
 ```
