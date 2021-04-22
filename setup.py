@@ -13,5 +13,6 @@ setuptools.setup(
     packages=setuptools.find_packages('src'),
     package_dir={'': 'src'},
     long_description=readme,
-    long_description_content_type='text/markdown'
+    long_description_content_type='text/markdown',
+    install_requires=['requests']
 )
