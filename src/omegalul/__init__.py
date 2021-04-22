@@ -3,6 +3,34 @@ import random
 import json
 import string
 
+class Chat:
+    """
+    represents a chat
+    """
+
+    def __init__(self, server, client_id):
+        """
+        creates a chat with a client id
+        """
+
+        self.server = server
+        self.client_id = client_id
+        self.messages = []
+
+    def fetch_events(self):
+        """
+        fetches events of a chat
+        """
+
+        return json.loads(requests.post(self.server + '/events', data={'id': self.client_id}).text)
+
+    def send_message(self, message):
+        """
+        sends a message to a chat
+        """
+
+        requests.post(self.server + '/send', data={'msg': message, 'id': self.client_id})
+
 def fetch_status():
     """
     fetches status of omegle, parses it into JSON and returns it
@@ -37,18 +65,6 @@ def start_chat(server):
         generate_randid()
     ))
 
-    return json.loads(response.text)
+    client_id = json.loads(response.text)['clientID']
 
-def fetch_events(server, id):
-    """
-    fetches events of a chat
-    """
-
-    return json.loads(requests.post(server + '/events', data={'id': id}).text)
-
-def send_message(server, id, message):
-    """
-    sends a message to a chat
-    """
-
-    requests.post(server + '/send', data={'msg': message, 'id': id})
+    return Chat(server, client_id)
