@@ -2,6 +2,15 @@ import requests
 import random
 import json
 import string
+import enum
+
+class Event(enum.Enum):
+    """
+    represents an event
+    """
+    GOTMESSAGE = 1
+    STRANGERDISCONNECTED = 2
+    TYPING = 3
 
 class Chat:
     """
@@ -17,12 +26,24 @@ class Chat:
         self.client_id = client_id
         self.messages = []
 
-    def fetch_events(self):
+    def fetch_event(self):
         """
-        fetches events of a chat
+        fetches the latest event of the chat
+        returns only when a new event is received
         """
 
-        return json.loads(requests.post(self.server + '/events', data={'id': self.client_id}).text)
+        event = json.loads(requests.post(self.server + '/events', data={'id': self.client_id}).text)[0]
+
+        if event[0] == 'gotMessage':
+            return (Event.GOTMESSAGE, event[1])
+
+        if event[0] == 'strangerDisconnected':
+            return (Event.STRANGERDISCONNECTED, None)
+
+        if event[0] == 'typing':
+            return (Event.TYPING, None)
+
+        return event
 
     def send_message(self, message):
         """
