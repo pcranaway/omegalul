@@ -12,20 +12,14 @@ server = omegalul.get_random_server(status['servers'])
 
 # start a chat
 chat = omegalul.start_chat(server)
+print(chat)
 
 while True:
-    # fetch events
-    # if the latest event is a gotMessage event, take the message and send it back
-    events = chat.fetch_events()
+    event = chat.fetch_event()
 
-    if events == None:
-        break
+    print(event)
 
-    event = events[0]
-
-    if event[0] == 'gotMessage':
-        print('Stranger: ', event[1])
-        
-        chat.send_message(event[1])
-        print('sent it back')
+    if event[0] == Events.GOTMESSAGE:
+      chat.send_message(event[1])
+      print('sent message back')
 ```
